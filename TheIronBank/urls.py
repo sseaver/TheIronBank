@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from app.views import IndexView, UserCreateView, TransactionListAPIView, TransactionDetailUpdateDestroyAPIView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', IndexView.as_view(), name='index_view'),
+    url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view"),
+    url(r'^api/transactions/$', TransactionListAPIView.as_view(), name="transaction_list_api_view"),
+    url(r'^api/transactions/(?P<pk>\d+)/$', TransactionDetailUpdateDestroyAPIView,
+        name="transaction_detail_update_destroy_api_view"),
 ]
