@@ -4,7 +4,8 @@ from app.serializers import TransactionSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, ListView
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -23,9 +24,19 @@ class UserCreateView(CreateView):
     success_url = "/"
 
 
-class ProfileView(CreateView):
+class ProfileView(ListView):
     model = Transaction
-    fields = "__all__"
+
+
+class TransactionCreateView(CreateView):
+    model = Transaction
+    fields = ("action", "amount")
+    success_url = reverse_lazy("profile_view")
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class TransactionListAPIView(ListCreateAPIView):

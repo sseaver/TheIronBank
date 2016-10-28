@@ -1,38 +1,24 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="container">
 
+{% block content %}
   <div class="row">
     <div class="eight columns">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-
-          <h3 class="panel-title">THE IRON BANK</h3>
-        </div>
-        <div class="panel-body">
-          <h5>Login to continue to your account page.</h5>
-        </div>
-      </div>
+      <br>
+      <h2>THE IRON BANK</h2>
+      <h5>Login to continue to your account page.</h5>
     </div>
 
       {% if not request.user.is_authenticated %}
       <div class="four columns">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">LOGIN</h3>
-          </div>
-          <div class="panel-body">
-            <form class="" action="{% url 'login' %}" method="post">
-              {% csrf_token %}
-              {{ login_form.as_p }}
-            <input type="submit" name="" value="Login">
-            </form>
-          </div>
-        </div>
+        <br>
+        <form class="" action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          {{ login_form.as_p }}
+          <input type="submit" name="" value="Login">
+        </form>
       </div>
       {% endif %}
 
   </div>
-</div>
 
 {% endblock %}

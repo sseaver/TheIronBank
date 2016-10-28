@@ -1,12 +1,12 @@
 from django.db import models
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 # Create your models here.
 
 
 ACTIONS = {
-    ("W", "withdrawal"),
-    ("D", "deposit"),
+    ("W", "Withdrawal"),
+    ("D", "Deposit"),
 }
 
 
@@ -18,12 +18,11 @@ class Transaction(models.Model):
 
 
 class Account(models.Model):
-    user = models.ForeignKey('auth.User')
-    transactions = models.ManyToManyField(Transaction)
+    user = models.OneToOneField('auth.User')
 
     @property
     def calc_balance(self):
-        return sum(self.transactions.all().value_list("amount", flat=True))
+        return sum(Transaction.objects.filter(user=self.user).values_list("amount", flat=True))
 
 
 @receiver(post_save, sender="auth.User")
@@ -32,3 +31,11 @@ def create_user_profile(**kwargs):
     instance = kwargs.get('instance')
     if created:
         Account.objects.create(user=instance)
+
+
+@receiver(pre_save, sender=Transaction)
+def is_withdrawal(**kwargs):
+    transaction = kwargs.get('instance')
+    print(kwargs)
+    if transaction.action == "W":
+        transaction.amount = (transaction.amount * -1)
