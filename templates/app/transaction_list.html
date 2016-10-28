@@ -16,13 +16,13 @@
   <tbody>
     {% for transaction in user_transactions %}
     <tr>
-      <td>{{ transaction.amount }}</td>
+      <td>${{ transaction.amount }}</td>
       <td>{{ transaction.get_action_display }}</td>
       <td>{{ transaction.created_time }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<h2>{{ request.user.account.calc_balance }}</h2>
+<h2>${{ request.user.account.calc_balance }}</h2>
 
 {% endblock %}
