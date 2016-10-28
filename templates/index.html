@@ -10,7 +10,7 @@
 
       {% if not request.user.is_authenticated %}
       <div class="four columns">
-        <br>
+        <h5>Login</h5>
         <form class="" action="{% url 'login' %}" method="post">
           {% csrf_token %}
           {{ login_form.as_p }}

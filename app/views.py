@@ -27,6 +27,11 @@ class UserCreateView(CreateView):
 class ProfileView(ListView):
     model = Transaction
 
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['user_transactions'] = Transaction.objects.filter(user=self.request.user)
+        return context
+
 
 class TransactionCreateView(CreateView):
     model = Transaction

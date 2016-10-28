@@ -3,7 +3,6 @@
 <a class="button" href="{% url 'transaction_create_view' %}">New Transaction</a>
 {% endblock %}
 {% block content %}
-
 <h4>{{ request.user }}'s Transaction History</h4>
 
 <table class="u-full-width">
@@ -15,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for transaction in object_list %}
+    {% for transaction in user_transactions %}
     <tr>
       <td>{{ transaction.amount }}</td>
       <td>{{ transaction.get_action_display }}</td>
@@ -25,4 +24,5 @@
   </tbody>
 </table>
 <h2>{{ request.user.account.calc_balance }}</h2>
+
 {% endblock %}

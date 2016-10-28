@@ -19,6 +19,9 @@
             {% endblock %}
             <a class="button" href="{% url 'logout' %}?next={% url 'index_view' %}">Log out</a>
             {% endif %}
+            {% if not request.user.is_authenticated %}
+              <a class="button" href="{% url 'user_create_view' %}">Create User</a>
+            {% endif %}
           </div>
       </div>
       {% endblock %}
