@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from app.models import Account, Transaction
 from app.serializers import TransactionSerializer
-from rest_framework.generics import ListCreateAPIView, DetailAPIView, RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.views.generic import CreateView, TemplateView, ListView
@@ -57,9 +57,9 @@ class TransactionListAPIView(ListCreateAPIView):
         return super().perform_create(serializer)
 
 
-class TransactionDetailAPIView(DetailAPIView):
+class TransactionRetrieveAPIView(RetrieveAPIView):
     serializer_class = TransactionSerializer
     permission_classes = (IsAuthenticated, )
 
-    def get_queryset(self):
-        Transaction.objects.filter(user=self.request.user)
+    def get_queryset(self, **kwargs):
+        return Transaction.objects.filter(user=self.request.user)

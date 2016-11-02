@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from app.views import (IndexView, UserCreateView, TransactionListAPIView, TransactionDetailAPIView,
+from app.views import (IndexView, UserCreateView, TransactionListAPIView, TransactionRetrieveAPIView,
                        ProfileView, TransactionCreateView)
 
 urlpatterns = [
@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view"),
     url(r'^transactions/create/$', TransactionCreateView.as_view(), name="transaction_create_view"),
     url(r'^api/transactions/$', TransactionListAPIView.as_view(), name="transaction_list_api_view"),
-    url(r'^api/transactions/(?P<pk>\d+)/$', TransactionDetailAPIView,
-        name="transaction_detail_update_destroy_api_view"),
+    url(r'^api/transactions/(?P<pk>\d+)/$', TransactionRetrieveAPIView.as_view(),
+        name="transaction_retrieve_api_view"),
 ]
